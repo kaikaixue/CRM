@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/db_practice
+    username: root
+    password: wutr2754
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.bean
+
+server:
+  port: 8081
+logging:
+  file:
+    path: /实训作业/logFile

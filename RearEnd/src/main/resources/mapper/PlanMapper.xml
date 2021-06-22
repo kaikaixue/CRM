@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.PlanMapper">
+    <insert id="insertPlan" parameterType="java.lang.Object">
+        insert into t_plan (name, employee_id, plan_time, complete, create_time, update_time) values
+            (#{name}, #{employeeId}, #{planTime}, #{complete}, #{createTime}, #{updateTime})
+    </insert>
+
+    <insert id="insertProductPlan" parameterType="java.lang.Object">
+        insert into t_plan_product (product_id, plan_id, number, create_time, update_time) values
+        (#{productId}, #{planId}, #{number}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateEmployeePlan" parameterType="java.lang.Object">
+        update t_plan set complete = #{complete}, update_time = #{updateTime} where id = #{id} and status != 0
+    </update>
+
+    <select id="queryPlan" parameterType="java.lang.Object" resultType="com.bean.PlanBean">
+        select * from t_plan where id = #{id} and status != 0
+    </select>
+
+    <select id="queryAllPlan" parameterType="java.lang.Object" resultType="com.bean.PlanBean">
+        select * from t_plan where status != 0
+    </select>
+
+    <select id="queryEmployeePlan" parameterType="java.lang.Object" resultType="com.bean.PlanBean">
+        select * from t_plan where employee_id = #{employeeId} and status != 0
+    </select>
+
+    <select id="queryPlanMaxId" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        select max(id) from t_plan;
+    </select>
+</mapper>

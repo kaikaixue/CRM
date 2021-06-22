@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.OrderMapper">
+    <insert id="addOrder" parameterType="java.lang.Object">
+        insert into t_order (product_id, user_id, plan_id, phase, number, create_time, update_time) values
+        (#{productId}, #{userId}, #{planId}, #{phase}, #{number}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateOrderPhase" parameterType="java.lang.Object">
+        update t_order set phase = #{phase}, update_time = #{updateTime} where id = #{id} and status != 0
+    </update>
+
+    <update id="deleteUserOrder" parameterType="java.lang.Object">
+        update t_order set status = 2, update_time = #{updateTime} where id = #{id} and status != 0
+    </update>
+
+    <select id="queryOrder" parameterType="java.lang.Object" resultType="com.dto.OrderDTO">
+        select * from t_order where id = #{id} and status != 0
+    </select>
+
+    <select id="queryPlanOrder" parameterType="java.lang.Object" resultType="com.dto.OrderDTO">
+        select * from t_order where product_id = #{productId} and plan_id = #{planId} and status != 0
+    </select>
+
+    <select id="queryUserAllOrder" parameterType="java.lang.Object" resultType="com.dto.OrderDTO">
+        select * from t_order where user_id = #{userId} and status = 1
+    </select>
+
+    <select id="queryOrderByPlan" parameterType="java.lang.Object" resultType="com.dto.OrderDTO">
+        select * from t_order where plan_id = #{planId} and status = 1
+    </select>
+
+    <select id="queryOrderCancel" parameterType="java.lang.Object" resultType="com.dto.OrderDTO">
+        select * from t_order where user_id = #{userId} and status != 0 and phase = 2
+    </select>
+
+    <select id="queryOrderMaxId" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        select max(id) from t_order;
+    </select>
+</mapper>

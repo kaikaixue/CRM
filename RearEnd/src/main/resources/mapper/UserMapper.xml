@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.UserMapper">
+    <insert id="registered" parameterType="java.lang.Object">
+        insert into t_user
+            (account, password, name, sex, phone, address, cred, speed_time, type, department, wages, marker, salt, create_time, update_time) values
+            (#{account}, #{password}, #{name}, #{sex}, #{phone}, #{address}, #{cred}, #{speed_time}, #{type}, #{department}, #{wages}, #{marker}, #{salt}, #{create_time}, #{update_time})
+    </insert>
+
+    <update id="updateUser" parameterType="java.lang.Object">
+        update t_user set name = #{name},
+                          sex = #{sex},
+                          avatar = #{avatar},
+                          phone = #{phone},
+                          address = #{address},
+                          cred = #{cred},
+                          speed_time = #{speed_time},
+                          type = #{type},
+                          department = #{department},
+                          wages = #{wages},
+                          update_time = #{update_time} where account = #{account}
+    </update>
+
+    <update id="updatePassword" parameterType="java.lang.Object">
+        update t_user set password = #{password}, update_time = #{updateTime} where account = #{account}
+    </update>
+
+    <update id="deleteUser" parameterType="java.lang.Object">
+        update t_user set status = 0 where id = #{id} and marker = #{marker}
+    </update>
+
+    <select id="login" parameterType="java.lang.Object" resultType="com.bean.UserBean">
+        select * from t_user where account = #{account} and marker = #{marker} and status != 0
+    </select>
+
+    <select id="query" parameterType="java.lang.Object" resultType="com.bean.UserBean">
+        select * from t_user where account = #{account} and status != 0
+    </select>
+
+    <select id="queryAllUser" parameterType="java.lang.Object" resultType="com.bean.UserBean">
+        select * from t_user where marker = #{marker} and status != 0
+    </select>
+
+    <select id="queryUserId" parameterType="java.lang.Object" resultType="com.bean.UserBean">
+        select * from t_user where id = #{id} and status != 0 and marker = #{marker}
+    </select>
+
+    <select id="queryAllDepartment" parameterType="java.lang.Object" resultType="com.dto.DepartmentDTO">
+        select * from t_department where status != 0
+    </select>
+
+    <select id="queryAllEmployeeType" parameterType="java.lang.Object" resultType="com.dto.EmployeeTypeDTO">
+        select * from t_employee_type where status != 0
+    </select>
+</mapper>
